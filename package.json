@@ -1,0 +1,69 @@
+{
+  "name": "@redwoodjs/starter-standard",
+  "version": "1.0.0",
+  "description": "Build fast, server-driven webapps on Cloudflare with SSR, RSC, and realtime. ",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "NODE_ENV=${NODE_ENV:-development} vite dev",
+    "dev:init": "rw-scripts dev-init",
+    "preview": "vite preview",
+    "worker:run": "rw-scripts worker-run",
+    "clean": "npm run clean:vite",
+    "clean:vite": "rm -rf ./node_modules/.vite",
+    "release": "rw-scripts ensure-deploy-env && npm run clean && prisma generate && RWSDK_DEPLOY=1 npm run build && wrangler deploy",
+    "migrate:dev": "prisma generate && wrangler d1 migrations apply DB --local",
+    "migrate:prd": "wrangler d1 migrations apply DB --remote",
+    "migrate:new": "rw-scripts migrate-new",
+    "seed": "npm run worker:run ./src/scripts/seed.ts",
+    "generate": "rw-scripts ensure-env && prisma generate && wrangler types",
+    "check": "npm run generate && npm run types",
+    "types": "tsc"
+  },
+  "dependencies": {
+    "@prisma/adapter-d1": "~6.5.0",
+    "@prisma/client": "~6.5.0",
+    "@radix-ui/react-avatar": "^1.1.7",
+    "@radix-ui/react-dialog": "^1.1.11",
+    "@radix-ui/react-popover": "^1.1.11",
+    "@radix-ui/react-select": "^2.2.2",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@redwoodjs/sdk": "0.0.77",
+    "@simplewebauthn/browser": "^13.1.0",
+    "@simplewebauthn/server": "^13.1.1",
+    "@tailwindcss/vite": "^4.1.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.507.0",
+    "next-themes": "^0.4.6",
+    "react-day-picker": "^9.6.7",
+    "sonner": "^2.0.3",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "prisma": "~6.5.0",
+    "tw-animate-css": "^1.2.9",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.6",
+    "wrangler": "^4.14.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "workerd"
+    ]
+  }
+}

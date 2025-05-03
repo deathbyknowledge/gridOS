@@ -1,0 +1,3 @@
+- had to fix headers to allow fonts.googleapis.com
+- seed file was not dropping Credential table
+- turnstile no longer included in the standard starter
