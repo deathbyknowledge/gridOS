@@ -1,3 +1,4 @@
 - had to fix headers to allow fonts.googleapis.com
 - seed file was not dropping Credential table
+- had to set up custom caledar as shadcn doesn't work rn https://github.com/shadcn-ui/ui/issues/7258#issuecomment-2831931709
 - turnstile no longer included in the standard starter

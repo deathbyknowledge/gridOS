@@ -1,14 +1,11 @@
-import { defineApp, ErrorResponse } from "@redwoodjs/sdk/worker";
+import { defineApp } from "@redwoodjs/sdk/worker";
 import { route, render, prefix } from "@redwoodjs/sdk/router";
 import { Document } from "@/app/Document";
 import { Home } from "@/app/pages/Home";
-import { setCommonHeaders } from "@/app/headers";
+import { authMiddleware, setCommonHeaders } from "@/app/middleware";
 import { userRoutes } from "@/app/pages/user/routes";
-import { sessions, setupSessionStore } from "./session/store";
 import { Session } from "./session/durableObject";
-import { db, setupDb } from "./db";
 import type { User } from "@prisma/client";
-import { env } from "cloudflare:workers";
 export { SessionDurableObject } from "./session/durableObject";
 
 export type AppContext = {
@@ -18,47 +15,17 @@ export type AppContext = {
 
 export default defineApp([
   setCommonHeaders(),
-  async ({ ctx, request, headers }) => {
-    await setupDb(env);
-    setupSessionStore(env);
-
-    try {
-      ctx.session = await sessions.load(request);
-    } catch (error) {
-      if (error instanceof ErrorResponse && error.code === 401) {
-        await sessions.remove(request, headers);
-        headers.set("Location", "/user/login");
-
+  authMiddleware(),
+  render(Document, [
+    prefix("/user", userRoutes),
+    ({ ctx }) => {
+      if (!ctx.user) {
         return new Response(null, {
           status: 302,
-          headers,
+          headers: { Location: "/user/auth" },
         });
       }
-
-      throw error;
-    }
-
-    if (ctx.session?.userId) {
-      ctx.user = await db.user.findUnique({
-        where: {
-          id: ctx.session.userId,
-        },
-      });
-    }
-  },
-  render(Document, [
+    },
     route("/", Home),
-    route("/protected", [
-      ({ ctx }) => {
-        if (!ctx.user) {
-          return new Response(null, {
-            status: 302,
-            headers: { Location: "/user/login" },
-          });
-        }
-      },
-      Home,
-    ]),
-    prefix("/user", userRoutes),
   ]),
 ]);

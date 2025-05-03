@@ -51,8 +51,8 @@ export function Signup() {
             Login
           </a>
         </div>
-        <h1 className="page-title text-center">Create an Account</h1>
-        <p className="py-6">Enter a username to setup an account.</p>
+        <h1 className="page-title text-center">Create your account</h1>
+        <p className="py-6">Enter a username to setup an account. You'll only need to do this once.</p>
         {result && (
           <Alert variant="destructive" className="mb-5">
             <AlertCircle className="h-4 w-4" />

@@ -5,18 +5,12 @@ export default defineScript(async ({ env }) => {
   setupDb(env);
 
   await db.$executeRawUnsafe(`\
+    DELETE FROM Credential;
     DELETE FROM User;
     DELETE FROM Files;
-    DELETE FROM Credential;
     DELETE FROM sqlite_sequence;
   `);
 
-  await db.user.create({
-    data: {
-      id: "1",
-      username: "testuser",
-    },
-  });
 
   await db.files.create({
     data: {
