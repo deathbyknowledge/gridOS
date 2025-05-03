@@ -1,5 +1,6 @@
 "use client";
 
+import { AuthLayout } from "@/app/layout/AuthLayout";
 import { Button } from "@/app/components/ui/button";
 import { useState, useTransition } from "react";
 import {
@@ -9,6 +10,9 @@ import {
   finishPasskeyRegistration,
   startPasskeyRegistration,
 } from "./functions";
+import { link } from "@/app/shared/links";
+import { Alert, AlertTitle } from "@/app/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export function Signup() {
   const [username, setUsername] = useState("");
@@ -39,18 +43,34 @@ export function Signup() {
   };
 
   return (
-      <main className="bg-bg">
-        <h1 className="text-4xl font-bold text-red-500">YOLO</h1>
+    <AuthLayout>
+      <div className="auth-form max-w-[400px] w-full mx-auto px-10">
+
+        <div className="absolute top-0 right-0 p-10">
+          <a href={link('/user/login')} className="font-display font-bold text-black text-sm underline underline-offset-8 hover:decoration-primary">
+            Login
+          </a>
+        </div>
+        <h1 className="page-title text-center">Create an Account</h1>
+        <p className="py-6">Enter a username to setup an account.</p>
+        {result && (
+          <Alert variant="destructive" className="mb-5">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{result}</AlertTitle>
+          </Alert>
+        )}
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         />
-        <Button onClick={handlePerformPasskeyRegister} disabled={isPending}>
-          {isPending ? <>...</> : "Register with passkey"}
+        <Button onClick={handlePerformPasskeyRegister} disabled={isPending} className="font-display w-full mb-6">
+          {isPending ? <>...</> : "Register with Passkey"}
         </Button>
+        <p>GridOS is owned by you. No one else.</p>
         {result && <div>{result}</div>}
-      </main>
-      );
+      </div>
+    </AuthLayout>
+  );
 }
