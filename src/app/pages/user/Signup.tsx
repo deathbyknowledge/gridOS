@@ -10,9 +10,9 @@ import {
   finishPasskeyRegistration,
   startPasskeyRegistration,
 } from "./functions";
-import { link } from "@/app/shared/links";
 import { Alert, AlertTitle } from "@/app/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+
 
 export function Signup() {
   const [username, setUsername] = useState("");
@@ -33,8 +33,6 @@ export function Signup() {
 
     if (!success) {
       setResult("Registration failed");
-    } else {
-      setResult("Registration successful!");
     }
   };
 
@@ -43,16 +41,11 @@ export function Signup() {
   };
 
   return (
-    <AuthLayout>
-      <div className="auth-form max-w-[400px] w-full mx-auto px-10">
-
-        <div className="absolute top-0 right-0 p-10">
-          <a href={link('/user/login')} className="font-display font-bold text-black text-sm underline underline-offset-8 hover:decoration-primary">
-            Login
-          </a>
-        </div>
+    <AuthLayout isSignup={true}>
+      <div className="auth-form max-w-[400px] w-full mx-auto px-10 bg-white rounded-lg shadow-md py-10">
         <h1 className="page-title text-center">Create your account</h1>
-        <p className="py-6">Enter a username to setup an account. You'll only need to do this once.</p>
+        <p className="pt-6">Enter a username to setup an account</p>
+        <p className="pb-6">You'll only need to do this once.</p>
         {result && (
           <Alert variant="destructive" className="mb-5">
             <AlertCircle className="h-4 w-4" />
@@ -69,7 +62,6 @@ export function Signup() {
           {isPending ? <>...</> : "Register with Passkey"}
         </Button>
         <p>GridOS is owned by you. No one else.</p>
-        {result && <div>{result}</div>}
       </div>
     </AuthLayout>
   );

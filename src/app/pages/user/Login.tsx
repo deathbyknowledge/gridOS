@@ -44,11 +44,6 @@ export function Login() {
 
   return (
     <AuthLayout>
-      <div className="absolute top-0 right-0 p-10">
-        <a href={link('/user/signup')} className="font-display font-bold text-black text-sm underline underline-offset-8 hover:decoration-primary">
-          Register
-        </a>
-      </div>
       <div className="auth-form max-w-[400px] w-full mx-auto px-10">
         <h1 className="page-title text-center">Login</h1>
         <p className="py-6">Enter your username below to sign-in.</p>

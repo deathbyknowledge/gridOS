@@ -1,14 +1,8 @@
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = ({ children, isSignup = false }: { children: React.ReactNode, isSignup?: boolean }) => {
     return (
-        // <div className="bg-background min-h-screen min-w-screen bg-[url('/images/landscape-mj.png')] bg-cover bg-center">
-        <div className="bg-background min-h-screen min-w-screen">
+        <div className={"bg-background min-h-screen min-w-screen bg-cover bg-center " + (isSignup ? "bg-[url('/images/landscape-mj.png')]" : "")} >
             <div className="grid grid-cols-[2fr_1fr] min-h-screen">
-                <div className="bg-[url('/images/square-subtle.png')] bg-cover bg-center">
-                    {/* <div className="bg-cover bg-center"> */}
-                    {/* <img src="/images/logo.svg" alt="Apply Wize" /> */}
-                    {/* <div>
-                        Apply Wize
-                    </div> */}
+                <div className={!isSignup ? "bg-[url('/images/square-subtle.png')] bg-cover bg-center" : ""}>
                 </div>
                 <div className="center relative">
                     <div className="w-full">
