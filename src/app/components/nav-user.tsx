@@ -82,12 +82,8 @@ export function NavUser({
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <IconCreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 <IconNotification />
-                Notifications
+                Configuration
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

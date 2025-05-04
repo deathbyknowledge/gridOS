@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { FileData, FileType } from "./FileExplorer"
+import { FileType, Entry } from "./FileExplorer"
 
 interface FilePreviewProps {
-    file: FileData
+    file: Entry
 }
 
 const getLanguage = (filename: string) => {
@@ -31,42 +31,58 @@ const getLanguage = (filename: string) => {
     }
 }
 
-const renderPreview = (file: FileData, opts: any) => {
-    console.log('AAAAAAAA', file);
+export function FilePreview({ file }: FilePreviewProps) {
+    const [text, setText] = useState<string>("");
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const audioRef = useRef<HTMLAudioElement>(null)
+    const url = `/api/file${file.path}`;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const text = await fetch(url).then(res => res.text());
+            setText(text);
+        }
+        fetchData();
+    }, []);
+
+    let Component: React.ReactNode;
     switch (file.type) {
         case FileType.Image:
-            return (
+            Component = (
                 <div className="flex justify-center w-full">
                     <img
-                        src={file.url || `/placeholder.svg?height=300&width=400`}
+                        src={url || `/placeholder.svg?height=300&width=400`}
                         alt={file.name}
                         className="max-w-full max-h-[70vh] object-contain rounded-md"
                     />
                 </div>
             )
+            break;
 
         case FileType.Video:
-            return (
+            Component = (
                 <div className="w-full">
-                    <video ref={opts.videoRef} controls className="w-full max-h-[70vh] rounded-md">
-                        <source src={file.url} type="video/mp4" />
+                    <video ref={videoRef} controls className="w-full max-h-[70vh] rounded-md">
+                        <source src={url} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
             )
+            break;
 
         case FileType.Audio:
-            return (
+            Component = (
                 <div className="w-full p-4">
-                    <audio ref={opts.audioRef} controls className="w-full">
-                        <source src={file.url} type="audio/mpeg" />
+                    <audio ref={audioRef} controls className="w-full">
+                        <source src={url} type="audio/mpeg" />
                         Your browser does not support the audio tag.
                     </audio>
                 </div>
             )
+            break;
 
         case FileType.Text:
-            return (
+            Component = (
                 <Card className="w-full overflow-hidden p-0">
                     <CardContent className="p-0">
                         <SyntaxHighlighter
@@ -74,19 +90,20 @@ const renderPreview = (file: FileData, opts: any) => {
                             showLineNumbers
                             customStyle={{
                                 margin: 0,
-                                padding: 0,
+                                padding: 10,
                                 borderRadius: "0.5rem",
                             }}
                             wrapLongLines={true}
                         >
-                            {opts.textContent}
+                            {text}
                         </SyntaxHighlighter>
                     </CardContent>
                 </Card>
             )
+            break;
 
         default:
-            return (
+            Component = (
                 <div className="flex flex-col items-center justify-center p-8 text-center w-full">
                     <div className="text-6xl mb-4">📄</div>
                     <h3 className="text-xl font-medium">{file.name}</h3>
@@ -94,25 +111,10 @@ const renderPreview = (file: FileData, opts: any) => {
                 </div>
             )
     }
-}
-
-export function FilePreview({ file }: FilePreviewProps) {
-    const [textContent, setTextContent] = useState<string>("")
-    const videoRef = useRef<HTMLVideoElement>(null)
-    const audioRef = useRef<HTMLAudioElement>(null)
-
-    useEffect(() => {
-        if (file.type === FileType.Text && file.content) {
-            setTextContent(file.content)
-        }
-    }, [file])
-
-    // Get language for syntax highlighting
-
 
     return (
         <div className="h-full w-full flex flex-col">
-            <div className="flex-1 overflow-auto w-full">{renderPreview(file, { textContent, videoRef, audioRef })}</div>
+            <div className="flex-1 overflow-auto w-full">{Component}</div>
         </div>
     )
 }

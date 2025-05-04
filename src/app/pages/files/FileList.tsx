@@ -18,17 +18,17 @@ import {
 
 import { Button } from "@/app/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu"
-import { FileData, FileType } from "./FileExplorer"
+import { type Entry, FileType } from "./FileExplorer"
 
 interface FileListProps {
-    files: FileData[]
-    onFileSelect: (file: FileData) => void
+    entries: Entry[]
+    onFileSelect: (file: Entry) => void
     onNavigateUp: () => void
     currentPath: string[]
-    selectedFile?: FileData | null
+    selectedFile?: Entry | null
 }
 
-const getFileIcon = (file: FileData) => {
+const getFileIcon = (file: Entry) => {
     switch (file.type) {
         case FileType.Directory:
             return <IconFolder fill="currentColor" className="h-5 w-5" />
@@ -46,12 +46,12 @@ const getFileIcon = (file: FileData) => {
 }
 
 
-export function FileList({ files, onFileSelect, onNavigateUp, currentPath, selectedFile }: FileListProps) {
+export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, selectedFile }: FileListProps) {
     // Track which file's dropdown is open to prevent file selection when clicking outside dropdown
     const [openDropdownFile, setOpenDropdownFile] = useState<string | null>(null)
 
     // Handle file action click
-    const handleFileAction = (e: React.MouseEvent, action: string, file: FileData) => {
+    const handleFileAction = (e: React.MouseEvent, action: string, file: Entry) => {
         e.stopPropagation() // Prevent triggering the file selection
 
         // These are dummy actions for now
@@ -63,7 +63,7 @@ export function FileList({ files, onFileSelect, onNavigateUp, currentPath, selec
     }
 
     // Handle file selection with dropdown awareness
-    const handleFileClick = (file: FileData) => {
+    const handleFileClick = (file: Entry) => {
         // Only select the file if we're not interacting with a dropdown
         if (openDropdownFile !== file.name) {
             onFileSelect(file)
@@ -78,11 +78,11 @@ export function FileList({ files, onFileSelect, onNavigateUp, currentPath, selec
                 </div>
             )}
 
-            {files.length === 0 ? (
+            {entries.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">This folder is empty</div>
             ) : (
                 <div className="grid gap-2">
-                    {files.map((file) => (
+                    {entries.map((file) => (
                         <div
                             key={file.name}
                             className={`flex items-center justify-between p-2 rounded-md ${selectedFile?.name === file.name ? "bg-muted" : "hover:bg-muted"}`}

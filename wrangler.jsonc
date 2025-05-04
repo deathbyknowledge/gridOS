@@ -3,7 +3,9 @@
   "name": "grid-os",
   "main": "src/worker.tsx",
   "compatibility_date": "2024-09-23",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "binding": "ASSETS"
   },
@@ -19,20 +21,28 @@
     ]
   },
   "vars": {
-    "WEBAUTHN_APP_NAME": "__change_me__",
-    "APP_NAME": "gridOS",
+    "WEBAUTHN_APP_NAME": "grid-os",
+    "APP_NAME": "gridOS"
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["SessionDurableObject"]
+      "new_sqlite_classes": [
+        "SessionDurableObject"
+      ]
     }
   ],
-    "d1_databases": [
-      {
-        "binding": "DB",
-        "database_name": "gridOS",
-        "database_id": "2fd9a477-7ac3-4495-8183-d8da6dd4a445"
-      }
-    ]
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "gridOS",
+      "database_id": "2fd9a477-7ac3-4495-8183-d8da6dd4a445"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "bucket_name": "grid-os",
+      "binding": "R2"
+    }
+  ]
 }

@@ -1,17 +1,19 @@
 import ShellLayout from "@/app/layout/ShellLayout";
 import { RequestInfo } from "@redwoodjs/sdk/worker";
 import { FileExplorer } from "./FileExplorer";
+import { listFolder } from "./functions";
 
-export function Files({ ctx, params }: RequestInfo) {
+export async function Files({ ctx, params }: RequestInfo) {
     let path = params.$0;
     if (!path.endsWith("/")) {
         path += "/";
     }
-
+    const entries = await listFolder(path);
+    console.log('entries', entries);
     return (
         <ShellLayout user={ctx.user!}>
             <div className="h-[calc(100vh-64px)] w-full">
-                <FileExplorer path={path} />
+                <FileExplorer path={path} entries={entries} />
             </div>
         </ShellLayout>
     )
