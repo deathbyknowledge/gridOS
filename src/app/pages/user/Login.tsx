@@ -14,7 +14,6 @@ import { Alert, AlertTitle } from "@/app/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { link } from "@/app/shared/links";
 
-const TURNSTILE_SITE_KEY = "0x4AAAAAABZlljuWmm2hCnKp";
 
 export function Login() {
   const [username, setUsername] = useState("");

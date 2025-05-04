@@ -124,7 +124,6 @@ export async function finishPasskeyLogin(login: AuthenticationResponseJSON) {
       credentialId: login.id,
     },
   });
-  console.log(credential);
 
   if (!credential) {
     return false;
