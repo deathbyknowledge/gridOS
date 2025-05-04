@@ -2,3 +2,6 @@
 - seed file was not dropping Credential table
 - had to set up custom caledar as shadcn doesn't work rn https://github.com/shadcn-ui/ui/issues/7258#issuecomment-2831931709
 - turnstile no longer included in the standard starter
+- Errors are terrible. Not enough information. Random functions not in my code are crashing...
+- getFileIconSSR. getFileIconSSRSSR. What? Moving the function outside of the component makes it work.
+- Cannot perform I/O on behalf of a different request. I/O objects (such as streams, request/response bodies, and others) created in the context of one request handler cannot be accessed from a different request's handler. This is a limitation of Cloudflare Workers which allows us to improve overall performance. (I/O type: SpanParent)

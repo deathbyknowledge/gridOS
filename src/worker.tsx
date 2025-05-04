@@ -6,11 +6,11 @@ import { authMiddleware, setCommonHeaders } from "@/app/middleware";
 import { userRoutes } from "@/app/pages/user/routes";
 import { Session } from "./session/durableObject";
 import type { User } from "@prisma/client";
-export { SessionDurableObject } from "./session/durableObject";
 import Dashboard from "./app/dashboard/page";
-import { FileExplorer } from "./app/pages/files/FileExplorer";
+import { Files } from "./app/pages/files/Files";
 import { Chat } from "./app/pages/iso/Chat";
 import { Contacts } from "./app/pages/contacts/Contacts";
+import { Test } from "./app/pages/test/Test";
 
 export type AppContext = {
   session: Session | null;
@@ -32,8 +32,11 @@ export default defineApp([
     },
     route("/", Home),
     route("/dashboard", Dashboard),
-    route("/files/*", FileExplorer),
+    route("/files*", Files),
     route("/iso", Chat),
     route("/contacts", Contacts),
+    route("/test", () => <Test />),
   ]),
 ]);
+
+export { SessionDurableObject } from "./session/durableObject";

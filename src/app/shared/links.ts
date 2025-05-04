@@ -3,7 +3,7 @@ import { defineLinks } from "@redwoodjs/sdk/router";
 export const link = defineLinks(["/",
     "/user/auth",
     "/user/logout",
-    "/files/*",
+    "/files*",
     "/iso",
     "/contacts",
 ]);

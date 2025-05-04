@@ -36,7 +36,7 @@ const data = {
   navMain: [
     {
       title: "Files",
-      url: link("/files/*", { '$0': "/" }),
+      url: link("/files*", { '$0': "/" }),
       icon: IconFolders,
     },
     {
