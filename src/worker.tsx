@@ -8,11 +8,11 @@ import { Session } from "./session/durableObject";
 import type { User } from "@prisma/client";
 import Dashboard from "./app/dashboard/page";
 import { Files } from "./app/pages/files/Files";
-import { Chat } from "./app/pages/iso/Chat";
 import { Contacts } from "./app/pages/contacts/Contacts";
 import { Test } from "./app/pages/test/Test";
 import { env } from "cloudflare:workers";
 import { db } from "./db";
+import { Chat } from "./app/pages/iso/Chat";
 
 
 export type AppContext = {

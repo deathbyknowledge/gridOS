@@ -31,7 +31,7 @@ interface FileListProps {
 const getFileIcon = (file: Entry) => {
     switch (file.type) {
         case FileType.Directory:
-            return <IconFolder fill="currentColor" className="h-5 w-5" />
+            return <IconFolder className="h-5 w-5" />
         case FileType.Image:
             return <IconPhoto className="h-5 w-5" />
         case FileType.Video:
@@ -101,9 +101,8 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
                     {entries.map((file) => (
                         <div
                             key={file.name}
-                            className={`flex items-center justify-between p-2 rounded-md ${selectedFile?.name === file.name ? "bg-muted" : "hover:bg-muted"}`}
+                            className={`flex items-center justify-between p-2 cursor-pointer rounded-md ${selectedFile?.name === file.name ? "bg-muted" : "hover:bg-muted"}`}
                         >
-                            {/* File info section - clickable */}
                             <div
                                 className="flex items-center overflow-hidden flex-1 cursor-pointer"
                                 onClick={() => handleFileClick(file)}
@@ -113,7 +112,7 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
                             </div>
 
                             {/* Actions section - separate from file selection */}
-                            <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+                            {file.type != FileType.Directory && <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
                                 <DropdownMenu
                                     onOpenChange={(open) => {
                                         if (open) {
@@ -151,7 +150,7 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                            </div>
+                            </div>}
                         </div>
                     ))}
                 </div>

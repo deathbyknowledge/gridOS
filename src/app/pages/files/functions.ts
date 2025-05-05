@@ -1,9 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { Files } from "@prisma/client";
 import { FileType, type Entry } from "./FileExplorer";
-
 
 export function getFileTypeFromExtension(filePath: string, isDirectory = false) {
     if (isDirectory) return FileType.Directory;
@@ -24,16 +22,12 @@ export function getFileTypeFromExtension(filePath: string, isDirectory = false) 
     if (audioExts.includes(extension)) return FileType.Audio;
 
     // Text extensions
-    const textExts = ['txt', 'md', 'json', 'xml', 'html', 'css', 'js', 'ts', 'csv'];
+    const textExts = ['txt', 'md', 'json', 'xml', 'html', 'css', 'js', 'ts', 'csv', 'py'];
     if (textExts.includes(extension)) return FileType.Text;
 
     // Default to Other for unrecognized extensions or no extension
     return FileType.Other;
 }
-
-
-/// REPLACE DUMMY DATA WITH THIS. WRITE CREATE/READ/UPDATE/DELETE FUNCTIONS FOR FILES.
-
 
 export async function listFolder(path: string): Promise<Entry[]> {
     try {

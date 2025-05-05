@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import { Card, CardContent } from "@/app/components/ui/card"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FileType, Entry } from "./FileExplorer"
+
 
 interface FilePreviewProps {
     file: Entry
@@ -9,12 +11,10 @@ interface FilePreviewProps {
 
 const getLanguage = (filename: string) => {
     const extension = filename.split(".").pop()?.toLowerCase()
-
     switch (extension) {
         case "js":
             return "javascript"
         case "ts":
-            return "typescript"
         case "jsx":
         case "tsx":
             return "typescript"
@@ -26,6 +26,8 @@ const getLanguage = (filename: string) => {
             return "json"
         case "md":
             return "markdown"
+        case "py":
+            return "python"
         default:
             return "text"
     }
@@ -88,6 +90,7 @@ export function FilePreview({ file }: FilePreviewProps) {
                         <SyntaxHighlighter
                             language={getLanguage(file.name)}
                             showLineNumbers
+                            style={vscDarkPlus}
                             customStyle={{
                                 margin: 0,
                                 padding: 10,
@@ -114,7 +117,7 @@ export function FilePreview({ file }: FilePreviewProps) {
 
     return (
         <div className="h-full w-full flex flex-col">
-            <div className="flex-1 overflow-auto w-full">{Component}</div>
+            <div className="flex-1 w-full">{Component}</div>
         </div>
     )
 }
