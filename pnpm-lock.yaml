@@ -101,9 +101,6 @@ importers:
       react-day-picker:
         specifier: ^9.6.7
         version: 9.6.7(react@19.2.0-canary-39cad7af-20250411)
-      react-resizable-panels:
-        specifier: ^3.0.1
-        version: 3.0.1(react-dom@19.2.0-canary-39cad7af-20250411(react@19.2.0-canary-39cad7af-20250411))(react@19.2.0-canary-39cad7af-20250411)
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@19.2.0-canary-39cad7af-20250411)
@@ -2568,12 +2565,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react-resizable-panels@3.0.1:
-    resolution: {integrity: sha512-6ruCEyw0iqXRcXEktPQn1HL553DNhrdLisCyEdSpzhkmo9bPqZxskJZ+aGeFqJ1qPvIWxuAiag82kvLSb2JZTQ==}
-    peerDependencies:
-      react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-      react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
   react-server-dom-webpack@19.2.0-canary-39cad7af-20250411:
     resolution: {integrity: sha512-B6TOkq4VA+p1rsPsElTCwLEwWe5T+eseoXVzYKR1COR2R2TNjO2bQb+52tr5ZJ76mXnZc18wpUdafp1+Zb6piw==}
@@ -5266,11 +5257,6 @@ snapshots:
       use-sidecar: 1.1.3(@types/react@19.1.2)(react@19.2.0-canary-39cad7af-20250411)
     optionalDependencies:
       '@types/react': 19.1.2
-
-  react-resizable-panels@3.0.1(react-dom@19.2.0-canary-39cad7af-20250411(react@19.2.0-canary-39cad7af-20250411))(react@19.2.0-canary-39cad7af-20250411):
-    dependencies:
-      react: 19.2.0-canary-39cad7af-20250411
-      react-dom: 19.2.0-canary-39cad7af-20250411(react@19.2.0-canary-39cad7af-20250411)
 
   react-server-dom-webpack@19.2.0-canary-39cad7af-20250411(react-dom@19.2.0-canary-39cad7af-20250411(react@19.2.0-canary-39cad7af-20250411))(react@19.2.0-canary-39cad7af-20250411)(webpack@5.99.7(esbuild@0.25.3)):
     dependencies:

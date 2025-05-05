@@ -1,11 +1,9 @@
 "use client";
 
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/app/components/ui/resizable";
 import { PathHeader } from "./PathHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { Save } from "lucide-react";
 import { useState } from "react";
-import { useIsMobile } from "@/app/hooks/use-mobile";
 import { Button } from "@/app/components/ui/button";
 import { FileList } from "./FileList";
 import { FilePreview } from "./FilePreview";
@@ -15,23 +13,9 @@ export function FileExplorer({ path, entries }: { path: string, entries: Entry[]
     const currentPath = path != '/' ? path.slice(1, -1).split('/') : [];
     const [selectedFile, setSelectedFile] = useState<Entry | null>(null)
     // const [activeTab, setActiveTab] = useState<"preview" | "edit">("preview")
-    const [editedContent, setEditedContent] = useState<string>("")
+    // const [editedContent, setEditedContent] = useState<string>("")
     const [isEdited, setIsEdited] = useState(false)
     // const isMobile = useIsMobile();
-
-    // Get current directory content
-    // const getCurrentContent = () => {
-    //     let current = fileSystem;
-    //     for (const folder of currentPath) {
-    //         const found = current.find((item) => item.name === folder && item.type === FileType.Directory)
-    //         if (found && found.type === FileType.Directory && found.children) {
-    //             current = found.children
-    //         } else {
-    //             return []
-    //         }
-    //     }
-    //     return current
-    // }
 
     const navigateTo = (path: string[]) => {
         if (isEdited && selectedFile?.type === FileType.Text) {

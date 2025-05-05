@@ -5,6 +5,9 @@ import { redwood } from "@redwoodjs/sdk/vite";
 
 export default defineConfig({
   plugins: [redwood(), tailwindcss()],
+  environments: {
+    ssr: {}
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
