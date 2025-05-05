@@ -4,12 +4,11 @@ import { FileExplorer } from "./FileExplorer";
 import { listFolder } from "./functions";
 
 export async function Files({ ctx, params }: RequestInfo) {
-    let path = params.$0;
+    let path = decodeURIComponent(params.$0);
     if (!path.endsWith("/")) {
         path += "/";
     }
     const entries = await listFolder(path);
-    console.log('entries', entries);
     return (
         <ShellLayout user={ctx.user!}>
             <div className="h-[calc(100vh-64px)] w-full">

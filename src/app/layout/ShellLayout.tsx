@@ -8,7 +8,7 @@ import { User } from "@prisma/client";
 
 export default function ShellLayout({ user, children }: { user: User, children: React.ReactNode }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider className="dark">
             <AppSidebar user={user} variant="inset" />
             <SidebarInset>
                 <SiteHeader />

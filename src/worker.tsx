@@ -40,14 +40,14 @@ export default defineApp([
     route("/contacts", Contacts),
     route("/test", () => <Test />),
     route("/api/file*", async ({ params, request }) => {
-      const path = params.$0;
+      const path = decodeURIComponent(params.$0);
       switch (request.method) {
         case "GET": {
           const file = await db.files.findUnique({ where: { path: path } });
           if (!file) {
             return new Response("File Not Found For " + path, { status: 404 });
           }
-          const object = await env.R2.get("blobs/" + file.blobKey);
+          const object = await env.R2.get(toR2Key(file.blobKey));
           if (object === null) {
             return new Response("Object Not Found", { status: 404 });
           }
@@ -58,7 +58,7 @@ export default defineApp([
             },
           })
         };
-        case "POST": {
+        case "PUT": {
           const file = await db.files.findUnique({
             where: {
               path
@@ -68,8 +68,7 @@ export default defineApp([
           const fileData = formData.get("file") as File;
           const id = file ? file.blobKey : crypto.randomUUID();
           // Stream the file directly to R2
-          const r2ObjectKey = `blobs/${id}`;
-          await env.R2.put(r2ObjectKey, fileData.stream(), {
+          await env.R2.put(toR2Key(id), fileData.stream(), {
             httpMetadata: {
               contentType: fileData.type,
             },
@@ -90,6 +89,23 @@ export default defineApp([
             },
           });
         }
+        case "DELETE": {
+          const file = await db.files.findUnique({
+            where: {
+              path
+            }
+          });
+          if (!file) {
+            return new Response("File Not Found", { status: 404 });
+          }
+          await env.R2.delete(toR2Key(file.blobKey));
+          await db.files.delete({
+            where: {
+              path
+            }
+          });
+          return new Response(null, { status: 204 });
+        }
         default: {
           return new Response("Method Not Allowed", { status: 405 });
         }
@@ -97,5 +113,9 @@ export default defineApp([
     }),
   ]),
 ]);
+
+const toR2Key = (key: string) => {
+  return `blobs/${key}`
+}
 
 export { SessionDurableObject } from "./session/durableObject";

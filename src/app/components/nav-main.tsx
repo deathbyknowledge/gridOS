@@ -48,7 +48,7 @@ export function NavMain({
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>
-                </a>
+              </a>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

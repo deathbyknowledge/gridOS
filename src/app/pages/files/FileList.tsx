@@ -6,7 +6,6 @@ import { useState } from "react"
 import {
     IconFile,
     IconFolder,
-    IconImageInPicture,
     IconMusic,
     IconVideo,
     IconFileText,
@@ -14,6 +13,7 @@ import {
     IconTrash,
     IconDotsVertical,
     IconPhoto,
+    IconFolderUp,
 } from "@tabler/icons-react"
 
 import { Button } from "@/app/components/ui/button"
@@ -56,9 +56,24 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
 
         // These are dummy actions for now
         if (action === "download") {
-            console.log(`Download ${file.name}`)
+            const url = `/api/file${file.path}`;
+            const fileName = file.name; // Use the file's name for the download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName; // Set the file name for the download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         } else if (action === "delete") {
-            console.log(`Delete ${file.name}`)
+            const response = fetch(`/api/file${file.path}`, {
+                method: 'DELETE',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload()
+                } else {
+                    console.error(`Failed to delete ${file.name}`)
+                }
+            })
         }
     }
 
@@ -74,6 +89,7 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
         <div className="space-y-2">
             {currentPath.length > 0 && (
                 <div className="flex items-center p-2 rounded-md hover:bg-muted cursor-pointer" onClick={onNavigateUp}>
+                    <IconFolderUp className="h-5 w-5 mr-2" />
                     <span>..</span>
                 </div>
             )}
@@ -130,7 +146,7 @@ export function FileList({ entries, onFileSelect, onNavigateUp, currentPath, sel
                                             onClick={(e) => handleFileAction(e, "delete", file)}
                                             className="text-destructive focus:text-destructive"
                                         >
-                                            <IconTrash className="mr-2 h-4 w-4" />
+                                            <IconTrash className="mr-2 h-4 w-4 text-destructive" />
                                             <span>Delete</span>
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>

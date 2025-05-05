@@ -36,7 +36,6 @@ export function getFileTypeFromExtension(filePath: string, isDirectory = false) 
 
 
 export async function listFolder(path: string): Promise<Entry[]> {
-    console.log('path', path);
     try {
         // Ensure path ends with '/' for consistency
         const normalizedPath = path.endsWith('/') ? path : `${path}/`;
@@ -94,7 +93,6 @@ export async function listFolder(path: string): Promise<Entry[]> {
             }
         }
 
-        console.log('entries', entries);
         return entries;
     } catch (e) {
         console.error('An error occurred while listing the folder', e);
